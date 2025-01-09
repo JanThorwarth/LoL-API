@@ -1,1 +1,9 @@
-<p>champion-card works!</p>
+<div class="card">
+    <div class="name">
+        <p>{{ champion.name }}</p>
+        <div class="title">
+            <p>{{ champion.title }}</p>
+        </div>
+    </div>
+        <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion.id + '_0.jpg'" alt="{{ champion.name }}">
+</div>

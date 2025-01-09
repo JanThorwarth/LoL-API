@@ -1,0 +1,50 @@
+.card {
+    color: white;
+    background-color: rgb(100, 116, 123);
+    width: 200px;
+    height: 300px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    position: relative;
+   
+
+    >img {
+        width: 100%;
+        /* Bild auf 100% der Containerbreite setzen */
+        height: 100%;
+        /* Bild auf 100% der Containerhöhe setzen */
+        object-fit: cover;
+        /* Das Bild füllt den Container aus, ohne verzerrt zu werden */
+        border-radius: 10px;
+        /* Optional: Runden der Ecken */
+    }
+}
+
+.name {
+    backdrop-filter: blur(4px);
+    background-color: rgb(80, 93, 98, 0.8);
+    width: 100%;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    bottom: 0;
+    box-sizing: border-box;
+
+    >p {
+        margin-top: 8px;
+        font-weight: 500;
+    }
+
+}
+
+.title {
+    >p {
+        color: rgb(196, 196, 196);
+    }
+
+}
