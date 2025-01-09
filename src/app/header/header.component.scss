@@ -1,0 +1,24 @@
+.header {
+    height: 100px;
+    background-color: rgb(70,75,77);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, rgb(81,84,87), rgb(36,42,47));
+    >input {
+        border: none;
+        padding-left: 30px;
+        padding-right: 8px;
+        background-image: url(../../assets/img/search.png);
+        background-repeat: no-repeat;
+       border-radius: 16px;
+       background-position: 10px 7.5px;
+        height: 30px;
+        width: 250px;
+        &:focus {
+            outline: none;
+        }
+
+      
+    }
+}
