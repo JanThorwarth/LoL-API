@@ -6,17 +6,22 @@
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     position: relative;
-   
+    transition: transform 0.5s;
+    
+
+    &:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+       
+    }
+
 
     >img {
         width: 100%;
-        /* Bild auf 100% der Containerbreite setzen */
         height: 100%;
-        /* Bild auf 100% der Containerhöhe setzen */
         object-fit: cover;
-        /* Das Bild füllt den Container aus, ohne verzerrt zu werden */
         border-radius: 10px;
-        /* Optional: Runden der Ecken */
+
     }
 }
 

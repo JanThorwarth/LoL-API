@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RiotApiService } from '../../riot-api.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+
 
 
 @Component({
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ChampionCardComponent {
   @Input() champion!: any;
+  
   
 
   constructor(public riotApi: RiotApiService) {}
