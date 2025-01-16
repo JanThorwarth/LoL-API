@@ -1,13 +1,24 @@
 <div class="detail-card">
-    <div class="info">
+    <div class="info-container">
         <div class="name">
-            <p>{{ champion.name }}</p>
+            <p>{{ champion?.name }}</p>
         </div>
         <div class="title">
-            <p>{{ champion.title }}</p>
+            <p>{{ champion?.title }}</p>
+        </div>
+        <div class="info">
+            <div class="stats">
+                <button>Fähigkeiten</button>
+                <button>Stats</button>
+            </div>
+            <div class="skins">
+                <button>Skins</button>
+                <button class="close">Close</button>
+            </div>
         </div>
     </div>
-    <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion.id + '_0.jpg'"
-        alt="{{ champion.name }}">
+
+    <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion?.id + '_0.jpg'"
+        alt="{{ champion?.name}}">
 
 </div>

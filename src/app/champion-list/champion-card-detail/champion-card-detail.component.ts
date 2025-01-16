@@ -14,9 +14,23 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ChampionCardDetailComponent {
    champion: any;
+   
 
     constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any) { 
       this.champion = data.champion
+    }
+
+    ngOnInit() {
+      this.riotApi.getChampionDetails(this.data.championId).subscribe((champ) => {
+        this.champion = champ.data[this.data.championId];
+        console.log(this.champion);
+        
+
+      })
+    }
+
+    closeDialog() {
+      
     }
 
 

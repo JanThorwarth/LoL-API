@@ -14,11 +14,7 @@ import { ChampionCardDetailComponent } from './champion-card-detail/champion-car
 @Component({
   selector: 'app-champion-list',
   standalone: true,
-  imports: [ChampionCardComponent, CommonModule,
-    MatDialogActions,
-    MatDialogClose,
-    MatDialogContent,
-    MatDialogTitle,],
+  imports: [ChampionCardComponent, CommonModule],
   templateUrl: './champion-list.component.html',
   styleUrl: './champion-list.component.scss'
 })
@@ -31,22 +27,17 @@ export class ChampionListComponent {
 
 
   ngOnInit() {
-    this.riotApi.getChampions().subscribe((data) => {
-      this.champions = Object.values(data.data).slice(0, 50)
-      console.log(this.champions);
-
-
+    this.riotApi.getChampions().subscribe((champion) => {
+      this.champions = Object.values(champion.data).slice(0, 50)
     })
-
-
   }
 
 
   openDialog(champion: any) {
     this.dialog.open(ChampionCardDetailComponent, {
       backdropClass: "background",
-      data: {champion},
-     
+      data: { championId: champion.id },
+
     });
   }
 
