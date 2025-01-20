@@ -1,20 +1,46 @@
 <div class="detail-card">
-    <div class="info-container">
+    <div [ngStyle]="{
+        'height': activeSection === 'abilities' ? '500px' : '250px'
+    }" class="info-container">
         <div class="name">
             <p>{{ champion?.name }}</p>
         </div>
         <div class="title">
             <p>{{ champion?.title }}</p>
         </div>
-        <div class="info">
+        <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
+            class="info">
             <div class="stats">
-                <button>Fähigkeiten</button>
-                <button>Stats</button>
+                <button (click)="showSection('abilities')">Fähigkeiten</button>
+                <button (click)="showSection('stats')">Stats</button>
             </div>
             <div class="skins">
-                <button>Skins</button>
-                <button class="close">Close</button>
+                <button (click)="showSection('skins')">Skins</button>
+                <button (click)="showSection(null)" (click)="closeDialog()" class="close">Close</button>
             </div>
+        </div>
+        <div class="abilities" *ngIf="activeSection === 'abilities'">
+            <img class="passive" [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/passive/' + champion?.passive?.image?.full"
+                alt=>
+                <div class="line-container">
+                    <div class="line"></div>
+                </div>
+                
+
+            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[0]?.image?.full"
+                alt=>
+            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[1]?.image?.full"
+                alt=>
+            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[2]?.image?.full"
+                alt=>
+            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[3]?.image?.full"
+                alt=>
+        </div>
+        <div *ngIf="activeSection === 'skins'">
+            <p>Hier werden die Skins angezeigt...</p>
+        </div>
+        <div *ngIf="activeSection === 'stats'">
+            <p>Hier werden die Statistiken angezeigt...</p>
         </div>
     </div>
 

@@ -23,5 +23,9 @@ export class RiotApiService {
     return this.http.get<any>(url);
   }
   
+  getChampionSpells(championId: string) {
+    let url = `${this.baseUrl}/${this.version}/data/de_DE/champion/${championId}/spells`
+    return this.http.get<any>(url)
+  }
 
 }

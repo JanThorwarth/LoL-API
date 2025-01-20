@@ -1,8 +1,8 @@
 import { Component, Inject, inject, Input } from '@angular/core';
 import { RiotApiService } from '../../riot-api.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CommonModule, FormStyle } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -14,9 +14,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ChampionCardDetailComponent {
    champion: any;
+   activeSection: string | null = null;
    
 
-    constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any) { 
+    constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ChampionCardDetailComponent> ) { 
       this.champion = data.champion
     }
 
@@ -24,14 +25,23 @@ export class ChampionCardDetailComponent {
       this.riotApi.getChampionDetails(this.data.championId).subscribe((champ) => {
         this.champion = champ.data[this.data.championId];
         console.log(this.champion);
+       
+        
+
         
 
       })
     }
 
     closeDialog() {
-      
+      this.dialogRef.close();
     }
+
+    showSection(section: string | null) {
+      this.activeSection = section
+
+    }
+   
 
 
 

@@ -8,6 +8,7 @@ import {
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
+  MatDialogRef
 } from '@angular/material/dialog';
 import { ChampionCardDetailComponent } from './champion-card-detail/champion-card-detail.component';
 
@@ -37,8 +38,8 @@ export class ChampionListComponent {
     this.dialog.open(ChampionCardDetailComponent, {
       backdropClass: "background",
       data: { championId: champion.id },
-
     });
   }
+
 
 }
