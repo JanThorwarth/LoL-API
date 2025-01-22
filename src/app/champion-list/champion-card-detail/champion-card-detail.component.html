@@ -2,10 +2,12 @@
     <div [ngStyle]="{
         'height': activeSection === 'abilities' ? '500px' : '250px'
     }" class="info-container">
-        <div class="name">
+        <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
+            class="name">
             <p>{{ champion?.name }}</p>
         </div>
-        <div class="title">
+        <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
+            class="title">
             <p>{{ champion?.title }}</p>
         </div>
         <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
@@ -20,27 +22,69 @@
             </div>
         </div>
         <div class="abilities" *ngIf="activeSection === 'abilities'">
-            <img class="passive" [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/passive/' + champion?.passive?.image?.full"
-                alt=>
-                <div class="line-container">
-                    <div class="line"></div>
-                </div>
-                
-
-            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[0]?.image?.full"
-                alt=>
-            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[1]?.image?.full"
-                alt=>
-            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[2]?.image?.full"
-                alt=>
-            <img [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[3]?.image?.full"
-                alt=>
+            <div (click)="showPassive()" class="passive-container">
+                <img [ngClass]="showP ? 'selected-border': ''" class="passive"
+                    [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/passive/' + champion?.passive?.image?.full"
+                    alt=>
+                <p>P</p>
+            </div>
+            <div class="line-container">
+                <div class="line"></div>
+            </div>
+            <div (click)="showQAbilty()" class="passive-container">
+                <img [ngClass]="showQ ? 'selected-border': ''"
+                    [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[0]?.image?.full"
+                    alt=>
+                <p>Q</p>
+            </div>
+            <div (click)="showWAbilty()" class="passive-container">
+                <img [ngClass]="showW ? 'selected-border': ''"
+                    [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[1]?.image?.full"
+                    alt=>
+                <p>W</p>
+            </div>
+            <div (click)="showEAbilty()" class="passive-container">
+                <img [ngClass]="showE ? 'selected-border': ''"
+                    [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[2]?.image?.full"
+                    alt=>
+                <p>E</p>
+            </div>
+            <div (click)="showRAbilty()" class="passive-container">
+                <img [ngClass]="showR ? 'selected-border': ''"
+                    [src]="'https://ddragon.leagueoflegends.com/cdn/15.1.1/img/spell/' + champion?.spells[3]?.image?.full"
+                    alt=>
+                <p>R</p>
+            </div>
         </div>
+        <div class="show-ability" *ngIf="showP">
+            <p [innerHTML]="champPassive">{{ champion.passive.description }}</p>
+
+        </div>
+        <div class="show-ability" *ngIf="showQ">
+            <p [innerHTML]="champQ">{{ champion.spells[0].description }}</p>
+
+        </div>
+        <div class="show-ability" *ngIf="showW">
+            <p [innerHTML]="champW">{{ champion.spells[1].description }}</p>
+
+        </div>
+        <div class="show-ability" *ngIf="showE">
+            <p [innerHTML]="champE">{{ champion.spells[2].description }}</p>
+
+        </div>
+        <div class="show-ability" *ngIf="showR">
+            <p [innerHTML]="champR">{{ champion.spells[3].description }}</p>
+
+        </div>
+        
         <div *ngIf="activeSection === 'skins'">
             <p>Hier werden die Skins angezeigt...</p>
         </div>
         <div *ngIf="activeSection === 'stats'">
             <p>Hier werden die Statistiken angezeigt...</p>
+        </div>
+        <div *ngIf="activeSection === 'abilities'" class="back-button">
+            <button (click)="showSection(null)">Back</button>
         </div>
     </div>
 
