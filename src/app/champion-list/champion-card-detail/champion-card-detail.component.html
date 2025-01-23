@@ -1,7 +1,7 @@
 <div class="detail-card">
     <div [ngStyle]="{
-        'height': activeSection === 'abilities' ? '500px' : '250px'
-    }" class="info-container">
+        'height': activeSection === 'abilities' ? '500px' : (activeSection === 'skins' ? '0px' : '250px')
+      }" class="info-container">
         <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
             class="name">
             <p>{{ champion?.name }}</p>
@@ -76,10 +76,10 @@
             <p [innerHTML]="champR">{{ champion.spells[3].description }}</p>
 
         </div>
-        
-        <div *ngIf="activeSection === 'skins'">
-            <p>Hier werden die Skins angezeigt...</p>
-        </div>
+
+
+       
+
         <div *ngIf="activeSection === 'stats'">
             <p>Hier werden die Statistiken angezeigt...</p>
         </div>
@@ -87,8 +87,20 @@
             <button (click)="showSection(null)">Back</button>
         </div>
     </div>
+   
 
-    <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion?.id + '_0.jpg'"
+    <img [ngClass]="{'d-none': activeSection === 'skins'}" [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion?.id + '_0.jpg'"
         alt="{{ champion?.name}}">
+
+</div>
+<div class="overlay" *ngIf="activeSection === 'skins'">
+    <div class="left">
+        <img class="left-img" (click)="lastImg()" src="./assets/img/angle-left.png" alt="">
+    </div>
+    <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion.name + '_' + imageIndex + '.jpg'"
+        alt="">
+        <div class="right">
+            <img class="right-img" (click)="nextImg()" src="./assets/img/angle-right.png" alt="">
+        </div>
 
 </div>

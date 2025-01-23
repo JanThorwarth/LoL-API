@@ -15,7 +15,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class ChampionCardDetailComponent {
   champion: any;
+  championSkins: any[] = []
   activeSection: string | null = null;
+  imageIndex: number = 1;
   showP: boolean = false;
   showQ: boolean = false;
   showW: boolean = false;
@@ -23,7 +25,7 @@ export class ChampionCardDetailComponent {
   showR: boolean = false;
 
 
-  constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ChampionCardDetailComponent>,private sanitizer: DomSanitizer) {
+  constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ChampionCardDetailComponent>, private sanitizer: DomSanitizer) {
     this.champion = data.champion
   }
   champPassive!: SafeHtml
@@ -35,6 +37,9 @@ export class ChampionCardDetailComponent {
   ngOnInit() {
     this.riotApi.getChampionDetails(this.data.championId).subscribe((champ) => {
       this.champion = champ.data[this.data.championId];
+      this.championSkins = champ.data[this.data.championId].skins;
+      console.log(this.championSkins);
+
       console.log(this.champion);
 
       this.champPassive = this.sanitizer.bypassSecurityTrustHtml(this.champion.passive.description)
@@ -96,5 +101,24 @@ export class ChampionCardDetailComponent {
     this.showW = false
     this.showE = false
   }
- 
+
+  lastImg() {
+    if (this.imageIndex > 0) {
+      this.imageIndex--
+    }
+    else {
+      this.imageIndex = this.championSkins.length - 1
+    }
+
+
+  }
+  nextImg() {
+    if (this.imageIndex < this.championSkins.length - 1) {
+      this.imageIndex++
+    } else {
+      this.imageIndex = 0
+    }
+  }
 }
+
+

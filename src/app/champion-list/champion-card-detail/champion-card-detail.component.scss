@@ -95,9 +95,11 @@ button {
         background-color: rgb(80, 214, 219);
     }
 
-    .d-none {
-        display: none !important;
-    }
+
+}
+
+.d-none {
+    display: none !important;
 }
 
 .abilities {
@@ -128,43 +130,66 @@ button {
     flex-wrap: wrap;
     color: white;
     font-weight: 600;
+
     >p {
         margin: 0;
     }
-        
+
     >img {
         max-width: 50px;
         height: auto;
         border: 2px solid transparent;
+
         &:hover {
             border: 2px solid rgb(80, 214, 219);
             cursor: pointer;
-    
+
         }
     }
-  
+
 }
+
 .show-ability {
     color: white;
     font-size: 16px;
     padding: 16px;
 }
+
 .selected-border {
     border: 2px solid rgb(80, 214, 219) !important;
 }
+
 .back-button {
     position: absolute;
-    bottom: 16px; /* Abstand vom unteren Rand */
+    bottom: 16px;
+    /* Abstand vom unteren Rand */
     left: 50%;
-    transform: translateX(-50%); /* Zentriert den Button horizontal */
+    transform: translateX(-50%);
+    /* Zentriert den Button horizontal */
     display: flex;
     justify-content: center;
     align-items: center;
-   
+
     >button {
-       display: flex;
-       position: absolute;
-       transform: translateY(-50%);
-   
+        display: flex;
+        position: absolute;
+        transform: translateY(-50%);
+
     }
+}
+
+.overlay {
+    display: flex;
+    position: fixed;
+    z-index: 1100;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+
+}
+
+.right-img, .left-img {
+    width: 40px !important;
+    height: auto !important;
 }
