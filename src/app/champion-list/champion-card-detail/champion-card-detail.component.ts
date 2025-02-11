@@ -1,9 +1,12 @@
-import { Component, Inject, inject, Input } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, ElementRef, Inject, inject, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { RiotApiService } from '../../riot-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, FormStyle } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Chart, DoughnutController, ArcElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PieController } from 'chart.js';
+
+
 
 
 @Component({
@@ -13,7 +16,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   templateUrl: './champion-card-detail.component.html',
   styleUrl: './champion-card-detail.component.scss'
 })
-export class ChampionCardDetailComponent {
+export class ChampionCardDetailComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('chartCanvas', { static: false }) chartCanvas!: ElementRef;
   champion: any;
   championSkins: any[] = []
   activeSection: string | null = null;
@@ -23,11 +27,14 @@ export class ChampionCardDetailComponent {
   showW: boolean = false;
   showE: boolean = false;
   showR: boolean = false;
+  chartInitialized = false;
+  chart: Chart | null = null;
 
 
-  constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ChampionCardDetailComponent>, private sanitizer: DomSanitizer) {
+  constructor(public riotApi: RiotApiService, @Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<ChampionCardDetailComponent>, private sanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
     this.champion = data.champion
   }
+
   champPassive!: SafeHtml
   champQ!: SafeHtml
   champW!: SafeHtml
@@ -38,7 +45,6 @@ export class ChampionCardDetailComponent {
     this.riotApi.getChampionDetails(this.data.championId).subscribe((champ) => {
       this.champion = champ.data[this.data.championId];
       this.championSkins = champ.data[this.data.championId].skins;
-      console.log(this.championSkins);
 
       console.log(this.champion);
 
@@ -48,7 +54,81 @@ export class ChampionCardDetailComponent {
       this.champE = this.sanitizer.bypassSecurityTrustHtml(this.champion.spells[2].description)
       this.champR = this.sanitizer.bypassSecurityTrustHtml(this.champion.spells[3].description)
     })
+
   }
+
+  ngAfterViewInit() {
+    if (this.activeSection === 'stats') {
+      this.createChart();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
+
+  createChart() {
+    if (!this.chartCanvas) return;
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    Chart.register(
+      PieController,
+      DoughnutController,
+      ArcElement,
+      CategoryScale,
+      LinearScale,
+      Title,
+      Tooltip,
+      Legend
+    );
+
+    this.chart = new Chart(this.chartCanvas.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: ['armor', 'mp', 'ad', 'attackrange', 'hp', 'movespeed', 'mr'],
+        datasets: [
+          {
+            label: '',
+            data: [
+              this.champion.stats.armor,
+              this.champion.stats.mp,
+              this.champion.stats.attackdamage,
+              this.champion.stats.attackrange,
+              this.champion.stats.hp,
+              this.champion.stats.movespeed,
+              this.champion.stats.spellblock,
+            ],
+            borderWidth: 1,
+            backgroundColor: ['red', 'blue', 'yellow', 'purple', 'green', 'orange', 'lightblue'],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        elements: {
+          arc: {
+            borderWidth: 0,
+          },
+        },
+      },
+    });
+  }
+
 
   closeDialog() {
     this.dialogRef.close();
@@ -56,11 +136,23 @@ export class ChampionCardDetailComponent {
 
   showSection(section: string | null) {
     this.activeSection = section
+    this.cdr.detectChanges();
+    if (this.activeSection === 'stats') {
+      setTimeout(() => {
+        this.createChart();
+      }, 0);
+    } else {
+      if (this.chart) {
+        this.chart.destroy();
+        this.chart = null;
+      }
+    }
     this.showQ = false
     this.showW = false
     this.showE = false
     this.showR = false
     this.showP = false
+    this.imageIndex = 0;
 
   }
 
@@ -120,5 +212,4 @@ export class ChampionCardDetailComponent {
     }
   }
 }
-
 

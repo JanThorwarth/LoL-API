@@ -7,3 +7,27 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+button {
+    background-color: rgb(75, 87, 92);
+    display: flex;
+    color: rgb(80, 214, 219);
+    outline: none;
+    border: 3px solid rgb(80, 214, 219);
+    padding: 12px 16px;
+    border-radius: 24px;
+    width: 190px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    &:hover {
+        color: white;
+        border: 3px solid gb(80, 214, 219);
+        background-color: rgb(80, 214, 219);
+    }
+
+
+}

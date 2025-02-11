@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
 import { ChampionListComponent } from "./champion-list/champion-list.component";
 import { HttpClientModule } from '@angular/common/http';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-root',

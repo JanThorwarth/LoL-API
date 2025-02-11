@@ -1,6 +1,7 @@
 <div class="detail-card">
     <div [ngStyle]="{
-        'height': activeSection === 'abilities' ? '500px' : (activeSection === 'skins' ? '0px' : '250px')
+        'height': activeSection === 'abilities' || activeSection === 'stats' ? '500px' :
+                  activeSection === 'skins' ? '0px' : '250px'
       }" class="info-container">
         <div [style.display]="activeSection === 'abilities' || activeSection === 'stats' || activeSection === 'skins' ? 'none' : 'flex'"
             class="name">
@@ -14,7 +15,7 @@
             class="info">
             <div class="stats">
                 <button (click)="showSection('abilities')">Fähigkeiten</button>
-                <button (click)="showSection('stats')">Stats</button>
+                <button  (click)="showSection('stats')">Stats</button>
             </div>
             <div class="skins">
                 <button (click)="showSection('skins')">Skins</button>
@@ -78,29 +79,43 @@
         </div>
 
 
-       
+
 
         <div *ngIf="activeSection === 'stats'">
-            <p>Hier werden die Statistiken angezeigt...</p>
+            <div class="canvas">
+                <canvas #chartCanvas></canvas>
+                <div class="stats-button"> 
+                    <button (click)="showSection(null)" >Back</button>
+                </div>
+            </div>
         </div>
         <div *ngIf="activeSection === 'abilities'" class="back-button">
             <button (click)="showSection(null)">Back</button>
         </div>
     </div>
-   
 
-    <img [ngClass]="{'d-none': activeSection === 'skins'}" [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion?.id + '_0.jpg'"
+
+    <img [ngClass]="{'d-none': activeSection === 'skins'}"
+        [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion?.id + '_0.jpg'"
         alt="{{ champion?.name}}">
 
 </div>
 <div class="overlay" *ngIf="activeSection === 'skins'">
-    <div class="left">
-        <img class="left-img" (click)="lastImg()" src="./assets/img/angle-left.png" alt="">
+
+    <div (click)="lastImg()" class="left">
+        <img class="left-img" src="./assets/img/angle-left.png" alt="">
     </div>
-    <img [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/loading/' + champion.name + '_' + imageIndex + '.jpg'"
-        alt="">
-        <div class="right">
-            <img class="right-img" (click)="nextImg()" src="./assets/img/angle-right.png" alt="">
+    <div>
+        <img class="skins-card"
+            [src]="'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + champion.name + '_' + championSkins[imageIndex].num + '.jpg'"
+            alt="">
+        <div class="skin-close">
+            <button (click)="showSection(null)">Back</button>
         </div>
+    </div>
+    <div (click)="nextImg()" class="right">
+        <img class="right-img" src="./assets/img/angle-right.png" alt="">
+    </div>
+
 
 </div>

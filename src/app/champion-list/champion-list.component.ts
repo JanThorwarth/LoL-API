@@ -29,7 +29,7 @@ export class ChampionListComponent {
 
   ngOnInit() {
     this.riotApi.getChampions().subscribe((champion) => {
-      this.champions = Object.values(champion.data).slice(0, 50)
+      this.champions = Object.values(champion.data).slice(0, 32)
     })
   }
 
@@ -41,5 +41,8 @@ export class ChampionListComponent {
     });
   }
 
-
+  moreChampions() {
+    
+  }
 }
+
