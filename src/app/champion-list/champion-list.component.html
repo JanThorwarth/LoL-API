@@ -1,5 +1,5 @@
 <div class="main">
-    <app-champion-card (click)="openDialog(champion)"  [champion]="champion" *ngFor="let champion of champions"></app-champion-card>
+    <app-champion-card (click)="openDialog(champion)"  [champion]="champion" *ngFor="let champion of riotApi.filteredChampions"></app-champion-card>
     <div>
         <button (click)="moreChampions()">Load more Champions</button>
     </div>

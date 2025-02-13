@@ -1,3 +1,3 @@
 <div class="header">
-   <input placeholder="Search" type="text">
+   <input (input)="filterChampions(searchChamp)" [(ngModel)]="searchChamp" placeholder="Search" type="text">
 </div>

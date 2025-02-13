@@ -21,18 +21,27 @@ import { ChampionCardDetailComponent } from './champion-card-detail/champion-car
 })
 export class ChampionListComponent {
   readonly dialog = inject(MatDialog);
-
+  allChampions = [];
+  filteredChampions = [];
   champions: any[] = []
+  loadedChampions: number = 30;
 
   constructor(public riotApi: RiotApiService) { }
 
 
   ngOnInit() {
-    this.riotApi.getChampions().subscribe((champion) => {
-      this.champions = Object.values(champion.data).slice(0, 32)
+    this.riotApi.getChampions().subscribe(() => {
+      this.allChampions = this.riotApi.allChampions
+      this.filteredChampions = this.riotApi.filteredChampions;
+      this.filteredChampions = this.filteredChampions.slice(0, this.loadedChampions)
     })
   }
 
+  moreChampions() {
+    this.loadedChampions += 30;
+    this.filteredChampions = this.allChampions.slice(0, this.loadedChampions); 
+  }
+  
 
   openDialog(champion: any) {
     this.dialog.open(ChampionCardDetailComponent, {
@@ -40,9 +49,6 @@ export class ChampionListComponent {
       data: { championId: champion.id },
     });
   }
-
-  moreChampions() {
-    
-  }
 }
+
 
